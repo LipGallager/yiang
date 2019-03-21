@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yiang.quartz02.mapper.TriggersMapper">
+    <resultMap id="BaseResultMap" type="com.yiang.quartz02.entity.Triggers">
+        <constructor>
+            <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="cron" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.String" jdbcType="CHAR"/>
+            <arg column="job_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="job_group" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        ,
+        cron,
+        status,
+        job_name,
+        job_group
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_schedule_trigger
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="queryScheduleTriggerLst" resultType="com.yiang.quartz02.entity.Triggers">
+        select
+        <include refid="Base_Column_List"/>
+        from t_schedule_trigger
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from t_schedule_trigger
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.yiang.quartz02.entity.Triggers">
+        insert into t_schedule_trigger (id, cron, status,
+                                        job_name, job_group)
+        values (#{id,jdbcType=INTEGER}, #{cron,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+                #{job_name,jdbcType=VARCHAR}, #{job_group,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.yiang.quartz02.entity.Triggers">
+        insert into t_schedule_trigger
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cron != null">
+                cron,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="job_name != null">
+                job_name,
+            </if>
+            <if test="job_group != null">
+                job_group,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cron != null">
+                #{cron,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="job_name != null">
+                #{job_name,jdbcType=VARCHAR},
+            </if>
+            <if test="job_group != null">
+                #{job_group,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yiang.quartz02.entity.Triggers">
+        update t_schedule_trigger
+        <set>
+            <if test="cron != null">
+                cron = #{cron,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="job_name != null">
+                job_name = #{job_name,jdbcType=VARCHAR},
+            </if>
+            <if test="job_group != null">
+                job_group = #{job_group,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yiang.quartz02.entity.Triggers">
+        update t_schedule_trigger
+        set cron      = #{cron,jdbcType=VARCHAR},
+            status    = #{status,jdbcType=CHAR},
+            job_name  = #{job_name,jdbcType=VARCHAR},
+            job_group = #{job_group,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
